@@ -10,7 +10,6 @@ unsigned long previousMillis = 0;
 const long interval = 100;
 
 float batteryData;
-// int moistureData, fertilityData, lightData;
 
 const int buttonPin = 19;
 const int ledPin = 2;
@@ -30,21 +29,6 @@ void sendData() {
   message += light;
   message += ";";
   message += batteryData;
-
-  // Serial.print("Temperature : ");
-  // Serial.println(temperature);
-
-  // Serial.print("battery : ");
-  // Serial.println(batteryData);
-
-  // Serial.print("Moisture : ");
-  // Serial.println(moisture);
-
-  // Serial.print("fertility : ");
-  // Serial.println(conductivity);
-
-  // Serial.print("light : ");
-  // Serial.println(light);
 
   Serial.println(message);
   Serial.println("");
