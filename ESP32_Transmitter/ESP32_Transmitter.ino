@@ -10,7 +10,8 @@
 #define Sender_Txd_pin 17
 #define Sender_Rxd_pin 16
 
-const char *ssid = "Kiti_2.4G";
+const char *ssid = "sjr_family2.4G";
+// const char *ssid = "Kiti_2.4G";
 const char *password = "0624368558";
 
 unsigned long previousMillis = 0;
@@ -49,6 +50,7 @@ void sendData() {
   Serial.println(message);
   Serial.println("");
   Sender.print(message);
+  Sender.print(t_datetime);
   Serial.println("Update Sensor Data To Display Complete");
 }
 
@@ -91,6 +93,7 @@ void get_time() {
   now_day = now.day();
   now_month = now.month();
   now_year = now.year();
+  daysOfTheWeek[now.dayOfTheWeek()];
 
   if (now_hour < 10) {
     t_hour = "0" + String(now_hour);
@@ -108,29 +111,14 @@ void get_time() {
     t_second = String(now_second);
   }
 
-  t_datetime = "Time " + t_hour +":"+ t_minute +":"+ t_second;
+  t_datetime = "Time " + t_hour + ":" + t_minute + ":" + t_second;
   Serial.println(t_datetime);
   delay(1000);
-
-  // Serial.print(now_year);
-  // Serial.print('/');
-  // Serial.print(now_month);
-  // Serial.print('/');
-  // Serial.print(now_day);
-  // Serial.print(" (");
-  // Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
-  // Serial.print(") ");
-  // Serial.print(now_hour);
-  // Serial.print(':');
-  // Serial.print(now_minute);
-  // Serial.print(':');
-  // Serial.print(now_second);
-  // Serial.println();
 }
 void setup() {
-  //Serial.begin(Baud Rate, Data Protocol, Txd pin, Rxd pin);
-  Serial.begin(115200);                                              // Define and start serial monitor
-  Sender.begin(115200, SERIAL_8N1, Sender_Txd_pin, Sender_Rxd_pin);  // Define and start Sender serial port
+
+  Serial.begin(115200);
+  Sender.begin(115200, SERIAL_8N1, Sender_Txd_pin, Sender_Rxd_pin);
 
   pinMode(buttonPin, INPUT_PULLUP);
   pinMode(ledPin, OUTPUT);
@@ -164,7 +152,7 @@ void setup() {
     DateTime now = rtc.now();
     rtc.adjust(DateTime(timeClient.getEpochTime()));
   }
-  
+
   bootCount++;
   get_BLEsensor();
   sendData();
